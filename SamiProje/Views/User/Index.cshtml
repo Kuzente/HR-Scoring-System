@@ -1,0 +1,150 @@
+﻿@model UserDto
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@section Links{
+    
+}
+<h1>Kullanıcılar</h1>
+@await Component.InvokeAsync("_UserCreate")
+
+
+<!-- DeleteModal -->
+<form asp-action="Delete" method="post">
+    <div class="modal fade" id="staticBackdrop2" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="staticBackdropLabel">Kullanıcı Sil</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    Kullanıcıyı silmek istediğinize emin misiniz?
+                    <input type="hidden" id="itemIdInput" name="id" value="">
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">İptal Et</button>
+                    <button type="submit" class="btn btn-danger">Sil</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>
+<!--Departman Listesi-->
+<div class="container mt-4">
+    <table id="datatable"
+           class="table table-striped">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Adı</th>
+                <th>Adres</th>
+                <th>Telefon No</th>
+                <th>Departmanlar</th>
+                <th>Şubeler</th>
+                <th>Oluşturulma Zamanı</th>
+                <th>Güncellenme Zamanı</th>
+                
+                <th>Aktif Mi?</th>
+                <th>Düzenle</th>
+                <th>Sil</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model.Users)
+            {
+                <tr>
+
+                    <td>@item.ID</td>
+                    <td>@item.Username</td>
+                    <td>@item.Mail</td>
+                    <td>@item.PhoneNumber</td>
+                    <td>
+                        @*@if (item.Departmants.Count > 0)
+                        {
+                            @foreach (var dongu in item.Departmants)
+                            {
+                                <span class="badge bg-info">@dongu.Name</span>
+                            }
+                           
+                        }
+                        else
+                        {
+                           
+                            <span class="badge bg-info">Departman Yok</span>
+                        }*@
+                        @if (item.Title?.Departmant != null)
+                        {
+                            <span class="badge bg-info">@item.Title.Departmant.Name</span>
+
+                        }
+                        else
+                        {
+
+                            <span class="badge bg-info">Departman Yok</span>
+                        }
+                        @if (item.Title == null)
+                        {
+                            <span class=" badge bg-danger">Ünvan Yok</span>
+                        }
+                        else
+                        {
+                            <span class=" badge bg-danger">@item.Title.Name</span>
+                        }
+                        
+                        
+                    </td>
+                    <td>
+                        @foreach (var dongu in item.Branches)
+                        {
+                            <span class="badge bg-dark">@dongu.Name</span>
+                        }
+                    </td>
+                    <td>@item.CreatedDate</td>
+                    <td>@item.UpdatedDate</td>
+                    
+                    @if (item.IsActive)
+                    {
+                        <td><span class="badge bg-success">Aktif</span></td>
+                    }
+                    else
+                    {
+                        <td><span class="badge bg-secondary">Pasif</span></td>
+                    }
+
+                    <td><a href="/User/Update/@item.ID" class="btn btn-warning">Düzenle</a></td>
+                    <td><button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#staticBackdrop2" data-item-id="@item.ID">Sil</button></td>
+
+                </tr>
+            }    
+
+        </tbody>
+    </table>
+    
+</div>
+<!--Departman Listesi-->
+@section Scripts{
+    
+    <script src="https://cdn.datatables.net/1.11.3/js/dataTables.bootstrap5.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
+    <script src="https://cdn.datatables.net/1.11.3/js/jquery.dataTables.min.js"></script>
+    
+
+    <script>
+        $(document).ready(function () {
+            $('#datatable').DataTable();
+        });
+    </script>
+    <script>
+        $('#staticBackdrop2').on('show.bs.modal', function (event) {
+            var button = $(event.relatedTarget); // Tıklanan butonu yakalayın
+            var itemId = button.data('item-id'); // data-item-id özelliğini alın
+
+            var modal = $(this);
+            modal.find('#itemIdInput').val(itemId); // itemIdInput adlı gizli input alanına değeri yerleştirin
+        });
+    </script>
+    
+}
+

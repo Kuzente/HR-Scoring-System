@@ -1,0 +1,73 @@
+﻿@model TitleDto
+@{
+    ViewData["Title"] = "Update";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h1>@Model.Name Düzenle</h1>
+<!--Departman Listesi-->
+<div class="container mt-4">
+    <form method="post">
+        <table id="datatable"
+               class="table table-striped">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Ünvan Adı</th>
+                    <th>Kullanıcı</th>
+                    <th>Departman Adı</th>
+                    <th>Ünvan Ağırlığı</th>
+                    <th>Aktif mi</th>
+                    <th>Düzenle</th>
+
+                </tr>
+            </thead>
+            <tbody>
+
+                <tr>
+                    <td>@Model.ID</td>
+                    <td><input asp-for="Name" type="text" class="form-control"></td>
+                    <td>
+                        <select class="form-select" asp-for="UserID" asp-items="@ViewBag.UsersSelectlist">
+                        </select>
+
+                    </td>
+                    <td>
+                        <select class="form-select" asp-for="Departmant.ID" asp-items="@ViewBag.DepartmantsSelectlist" >
+
+                        </select>
+
+                    </td>
+                    <td> <input asp-for="Weight" type="number" class="form-control"></td>
+                    <td>
+                        <label><input asp-for="IsActive" type="radio" value="true"> Aktif</label>
+                        <label><input asp-for="IsActive" type="radio" value="false"> Pasif</label>
+                        <input asp-for="CreatedDate" type="hidden" class="form-control">
+                    </td>
+
+
+
+                    <td> <button type="submit" class="btn btn-warning">Düzenle</button></td>
+
+
+                </tr>
+
+
+
+
+            </tbody>
+        </table>
+    </form>
+</div>
+<!--Departman Listesi-->
+@section Scripts{
+    <script src="https://cdn.datatables.net/1.11.3/js/dataTables.bootstrap5.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
+    <script src="https://cdn.datatables.net/1.11.3/js/jquery.dataTables.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            $('#datatable').DataTable();
+        });
+    </script>
+}
+

@@ -1,0 +1,30 @@
+﻿@model BranchDto
+<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
+    Şube Ekle
+</button>
+<!-- AddModal -->
+<form asp-controller="Branch" asp-action="Add" method="post">
+    <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="staticBackdropLabel">Departman Ekle</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <label class="form-label">Şube Adı</label>
+                    <input asp-for="Name" type="text" class="form-control">
+                    <label class="form-label">Şube Adresi</label>
+                    <input asp-for="Address" type="text" class="form-control">
+                    <label class="form-label">Şube Telefonu</label>
+                    <input asp-for="PhoneNumber" type="tel" class="form-control">
+
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Kapat</button>
+                    <button type="submit" class="btn btn-primary">Ekle</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>
