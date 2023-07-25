@@ -59,5 +59,10 @@ namespace Business.Concrete
         {
             return _userDal.GetListByFilter(filter);
         }
+
+        public void ChangeStatus(int id)
+        {
+            _userDal.ChangeStatus(id);
+        }
     }
 }

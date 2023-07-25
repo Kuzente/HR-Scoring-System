@@ -12,7 +12,9 @@ namespace SamiProje.Business.Abstract
 		void TAdd(T entity);
 		void TDelete(T entity);
 		void TUpdate(T entity);
-		List<T> TGetList();
+		void ChangeStatus(int id);
+
+        List<T> TGetList();
 		T TGetById(int id);
         List<T> GetListByFilter(Expression<Func<T, bool>> filter);
     }

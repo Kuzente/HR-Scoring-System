@@ -7,12 +7,10 @@ using System.Threading.Tasks;
 
 namespace Entity
 {
-    public class User : BaseEntity
+    public class TitleQuestion : BaseEntity
     {
-        public string Username { get; set; }
-        public string Mail { get; set; }
-        public string PhoneNumber { get; set; }        
-        public List<Branch> Branches { get; set; }
+        public string Content { get; set; }
+        public int Weight { get; set; }
         public Title Title { get; set; }
         public int TitleID { get; set; }
     }

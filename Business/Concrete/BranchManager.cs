@@ -1,6 +1,10 @@
-﻿using Business.Abstract;
+﻿using AutoMapper;
+using Business.Abstract;
 using DataAccess.Abstract;
+using DTO;
+using DTO.Abstract;
 using Entity;
+using SamiProje.Business.Abstract;
 using SamiProje.DataAccess.Abstract;
 using SamiProje.DataAccess.Concrete;
 using System;
@@ -19,6 +23,12 @@ namespace Business.Concrete
         public BranchManager(IBranchDal branchDal)
         {
             _branchDal = branchDal;
+           
+        }
+
+        public void ChangeStatus(int id)
+        {
+           _branchDal.ChangeStatus(id);
         }
 
         public List<Branch> GetListByFilter(Expression<Func<Branch, bool>> filter)
@@ -33,6 +43,7 @@ namespace Business.Concrete
 
         public void TDelete(Branch entity)
         {
+            
             _branchDal.Delete(entity);
         }
 

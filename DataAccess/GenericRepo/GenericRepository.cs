@@ -1,4 +1,5 @@
 ﻿
+using Entity.Base;
 using Microsoft.EntityFrameworkCore;
 using SamiProje.DataAccess.Abstract;
 using SamiProje.DataAccess.Concrete;
@@ -11,7 +12,7 @@ using System.Threading.Tasks;
 
 namespace SamiProje.DataAccess.GenericRepo
 {
-	public class GenericRepository<T> : IGenericDal<T> where T : class
+	public class GenericRepository<T> : IGenericDal<T> where T : BaseEntity
 	{
 		public void Add(T t)
 		{
@@ -66,5 +67,25 @@ namespace SamiProje.DataAccess.GenericRepo
 			}
 		}
 
-	}
+        public void ChangeStatus(int id)
+        {
+			
+            using (Context context = new Context())
+            {
+                var model = GetById(id);
+                if (model.IsActive == true)
+                {
+                    model.IsActive = false;
+                    
+                }
+                else
+                {
+                    model.IsActive = true;
+                    
+                }
+				context.Entry(model).State = EntityState.Modified;
+				context.SaveChanges();
+            }
+        }
+    }
 }

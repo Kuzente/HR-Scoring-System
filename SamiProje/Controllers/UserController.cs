@@ -104,5 +104,10 @@ namespace SamiProje.Controllers
             _userService.TDelete(model);
             return RedirectToAction("Index");
         }
+        public IActionResult ChangeStatus(int id)
+        {
+            _userService.ChangeStatus(id);
+            return RedirectToAction("Index");
+        }
     }
 }

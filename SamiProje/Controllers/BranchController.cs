@@ -22,34 +22,34 @@ namespace SamiProje.Controllers
         {
             BranchDto dto = new();
             dto.Branches = _branchService.TGetList();
-
             return View(dto);
         }
         [HttpPost]
         public IActionResult Add(BranchDto dto)
-        {
-            var model = _mapper.Map<Branch>(dto);
-            _branchService.TAdd(model);
+        {          
+            _branchService.TAdd(_mapper.Map<Branch>(dto));
             return RedirectToAction("Index");
         }
         [HttpGet]
         public IActionResult Update(int id)
         {
-            var dto = _mapper.Map<BranchDto>(_branchService.TGetById(id));
-            return View(dto);
+            return View(_mapper.Map<BranchDto>(_branchService.TGetById(id)));
         }
         [HttpPost]
         public IActionResult Update(BranchDto dto)
         {
-            var model = _mapper.Map<Branch>(dto);
-            _branchService.TUpdate(model);
+            _branchService.TUpdate(_mapper.Map<Branch>(dto));
             return RedirectToAction("Index");
         }
         [HttpPost]
         public IActionResult Delete(int id)
         {
-            var model = _branchService.TGetById(id);
-            _branchService.TDelete(model);
+            _branchService.TDelete(_branchService.TGetById(id));
+            return RedirectToAction("Index");
+        }
+        public IActionResult ChangeStatus(int id)
+        {
+            _branchService.ChangeStatus(id);
             return RedirectToAction("Index");
         }
     }

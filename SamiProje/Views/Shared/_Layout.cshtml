@@ -8,6 +8,8 @@
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/SamiProje.styles.css" asp-append-version="true" />
     <link rel="stylesheet" href="https://cdn.datatables.net/1.11.3/css/dataTables.bootstrap5.min.css" />
+    <!-- Font Awesome -->
+    
           @await RenderSectionAsync("Links", required:false)  
 </head>
 <body>
@@ -35,6 +37,8 @@
                         </li>
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-controller="Title" asp-action="Index">Ünvanlar</a>
+                        </li><li class="nav-item">
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Question" asp-action="Index">Soru Ekle</a>
                         </li>
                     </ul>
                 </div>

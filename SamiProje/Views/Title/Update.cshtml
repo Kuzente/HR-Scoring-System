@@ -13,11 +13,9 @@
             <thead>
                 <tr>
                     <th>ID</th>
-                    <th>Ünvan Adı</th>
-                    <th>Kullanıcı</th>
+                    <th>Ünvan Adı</th>                   
                     <th>Departman Adı</th>
                     <th>Ünvan Ağırlığı</th>
-                    <th>Aktif mi</th>
                     <th>Düzenle</th>
 
                 </tr>
@@ -26,12 +24,7 @@
 
                 <tr>
                     <td>@Model.ID</td>
-                    <td><input asp-for="Name" type="text" class="form-control"></td>
-                    <td>
-                        <select class="form-select" asp-for="UserID" asp-items="@ViewBag.UsersSelectlist">
-                        </select>
-
-                    </td>
+                    <td><input asp-for="Name" type="text" class="form-control"></td>                   
                     <td>
                         <select class="form-select" asp-for="Departmant.ID" asp-items="@ViewBag.DepartmantsSelectlist" >
 
@@ -39,12 +32,8 @@
 
                     </td>
                     <td> <input asp-for="Weight" type="number" class="form-control"></td>
-                    <td>
-                        <label><input asp-for="IsActive" type="radio" value="true"> Aktif</label>
-                        <label><input asp-for="IsActive" type="radio" value="false"> Pasif</label>
-                        <input asp-for="CreatedDate" type="hidden" class="form-control">
-                    </td>
-
+                    
+                    <input asp-for="CreatedDate" type="hidden" class="form-control">
 
 
                     <td> <button type="submit" class="btn btn-warning">Düzenle</button></td>

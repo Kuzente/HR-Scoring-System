@@ -12,8 +12,8 @@ using SamiProje.DataAccess.Concrete;
 namespace DataAccess.Migrations
 {
     [DbContext(typeof(Context))]
-    [Migration("20230716155311_mig2")]
-    partial class mig2
+    [Migration("20230725115118_TitleQuestionAdd")]
+    partial class TitleQuestionAdd
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -38,21 +38,6 @@ namespace DataAccess.Migrations
                     b.HasIndex("UsersID");
 
                     b.ToTable("BranchUser");
-                });
-
-            modelBuilder.Entity("DepartmantUser", b =>
-                {
-                    b.Property<int>("DepartmantsID")
-                        .HasColumnType("int");
-
-                    b.Property<int>("UsersID")
-                        .HasColumnType("int");
-
-                    b.HasKey("DepartmantsID", "UsersID");
-
-                    b.HasIndex("UsersID");
-
-                    b.ToTable("DepartmantUser");
                 });
 
             modelBuilder.Entity("Entity.Branch", b =>
@@ -142,9 +127,6 @@ namespace DataAccess.Migrations
                     b.Property<DateTime>("UpdatedDate")
                         .HasColumnType("datetime2");
 
-                    b.Property<int>("UserID")
-                        .HasColumnType("int");
-
                     b.Property<int>("Weight")
                         .HasColumnType("int");
 
@@ -152,10 +134,41 @@ namespace DataAccess.Migrations
 
                     b.HasIndex("DepartmantID");
 
-                    b.HasIndex("UserID")
-                        .IsUnique();
-
                     b.ToTable("Titles");
+                });
+
+            modelBuilder.Entity("Entity.TitleQuestion", b =>
+                {
+                    b.Property<int>("ID")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ID"));
+
+                    b.Property<string>("Content")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("CreatedDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<bool>("IsActive")
+                        .HasColumnType("bit");
+
+                    b.Property<int>("TitleID")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("UpdatedDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("Weight")
+                        .HasColumnType("int");
+
+                    b.HasKey("ID");
+
+                    b.HasIndex("TitleID");
+
+                    b.ToTable("TitleQuestion");
                 });
 
             modelBuilder.Entity("Entity.User", b =>
@@ -169,6 +182,9 @@ namespace DataAccess.Migrations
                     b.Property<DateTime>("CreatedDate")
                         .HasColumnType("datetime2");
 
+                    b.Property<int?>("DepartmantID")
+                        .HasColumnType("int");
+
                     b.Property<bool>("IsActive")
                         .HasColumnType("bit");
 
@@ -180,6 +196,9 @@ namespace DataAccess.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<int>("TitleID")
+                        .HasColumnType("int");
+
                     b.Property<DateTime>("UpdatedDate")
                         .HasColumnType("datetime2");
 
@@ -188,6 +207,10 @@ namespace DataAccess.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("ID");
+
+                    b.HasIndex("DepartmantID");
+
+                    b.HasIndex("TitleID");
 
                     b.ToTable("Users");
                 });
@@ -207,21 +230,6 @@ namespace DataAccess.Migrations
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("DepartmantUser", b =>
-                {
-                    b.HasOne("Entity.Departmant", null)
-                        .WithMany()
-                        .HasForeignKey("DepartmantsID")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("Entity.User", null)
-                        .WithMany()
-                        .HasForeignKey("UsersID")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-                });
-
             modelBuilder.Entity("Entity.Title", b =>
                 {
                     b.HasOne("Entity.Departmant", "Departmant")
@@ -230,26 +238,47 @@ namespace DataAccess.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("Entity.User", "User")
-                        .WithOne("Title")
-                        .HasForeignKey("Entity.Title", "UserID")
+                    b.Navigation("Departmant");
+                });
+
+            modelBuilder.Entity("Entity.TitleQuestion", b =>
+                {
+                    b.HasOne("Entity.Title", "Title")
+                        .WithMany("TitleQuestions")
+                        .HasForeignKey("TitleID")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("Departmant");
+                    b.Navigation("Title");
+                });
 
-                    b.Navigation("User");
+            modelBuilder.Entity("Entity.User", b =>
+                {
+                    b.HasOne("Entity.Departmant", null)
+                        .WithMany("Users")
+                        .HasForeignKey("DepartmantID");
+
+                    b.HasOne("Entity.Title", "Title")
+                        .WithMany("Users")
+                        .HasForeignKey("TitleID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Title");
                 });
 
             modelBuilder.Entity("Entity.Departmant", b =>
                 {
                     b.Navigation("Titles");
+
+                    b.Navigation("Users");
                 });
 
-            modelBuilder.Entity("Entity.User", b =>
+            modelBuilder.Entity("Entity.Title", b =>
                 {
-                    b.Navigation("Title")
-                        .IsRequired();
+                    b.Navigation("TitleQuestions");
+
+                    b.Navigation("Users");
                 });
 #pragma warning restore 612, 618
         }

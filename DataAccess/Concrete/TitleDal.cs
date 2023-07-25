@@ -17,8 +17,8 @@ namespace DataAccess.Concrete
         {
             using (Context context = new Context())
             {
-                return context.Titles.Include(p => p.Departmant)
-                    .Include(p=> p.User)
+                return context.Titles                   
+                    .Include(p => p.Departmant)                   
                     .ToList();
             }
         }
@@ -27,9 +27,9 @@ namespace DataAccess.Concrete
         {
             using (Context context = new Context())
             {
-                return context.Titles.Where(p=> p.ID == id)
+                return context.Titles
+                    .Where(p=> p.ID == id)
                     .Include(p => p.Departmant)
-                    .Include(p => p.User)
                     .FirstOrDefault();
             }
         }

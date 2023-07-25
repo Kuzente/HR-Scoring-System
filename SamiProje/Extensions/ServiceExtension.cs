@@ -17,6 +17,7 @@ namespace SamiProje.Extensions
             services.AddScoped<IBranchDal, BranchDal>();
             services.AddScoped<IUserDal, UserDal>();
             services.AddScoped<ITitleDal, TitleDal>();
+            services.AddScoped<ITitleQuestionDal, TitleQuestionDal>();
         }
         public static void ConfigureBusinessLifetimes(this IServiceCollection services) 
         {
@@ -24,6 +25,7 @@ namespace SamiProje.Extensions
             services.AddScoped<IBranchService, BranchManager>();
             services.AddScoped<IUserService, UserManager>();
             services.AddScoped<ITitleService, TitleManager>();
+            services.AddScoped<ITitleQuestionService ,  TitleQuestionManager>();
         }
     }
 }

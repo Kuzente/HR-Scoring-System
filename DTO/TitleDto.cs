@@ -14,7 +14,6 @@ namespace DTO
         public int Weight { get; set; }
         public Departmant Departmant { get; set; }
         public List<Title> Titles { get; set; }
-        public int UserID { get; set; }
-        public User User { get; set; }
+        
     }
 }

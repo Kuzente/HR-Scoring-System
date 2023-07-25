@@ -19,6 +19,11 @@ namespace Business.Concrete
             _titleDal = titleDal;
         }
 
+        public void ChangeStatus(int id)
+        {
+            _titleDal.ChangeStatus(id);
+        }
+
         public List<Title> GetListByFilter(Expression<Func<Title, bool>> filter)
         {
             return _titleDal.GetListByFilter(filter);

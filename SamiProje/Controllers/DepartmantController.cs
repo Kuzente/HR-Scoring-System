@@ -50,5 +50,10 @@ namespace SamiProje.Controllers
 			_departmantService.TDelete(model);
             return RedirectToAction("Index");
         }
+        public IActionResult ChangeStatus(int id)
+        {
+            _departmantService.ChangeStatus(id);          
+            return RedirectToAction("Index");
+        }
     }
 }

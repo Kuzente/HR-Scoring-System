@@ -21,6 +21,11 @@ namespace SamiProje.Business.Concrete
 			_departmantDal = departmantDal;
 		}
 
+        public void ChangeStatus(int id)
+        {
+            _departmantDal.ChangeStatus(id);
+        }
+
         public List<Departmant> GetListByFilter(Expression<Func<Departmant, bool>> filter)
         {
             return _departmantDal.GetListByFilter(filter);
@@ -28,7 +33,8 @@ namespace SamiProje.Business.Concrete
 
         public void TAdd(Departmant entity)
 		{
-			_departmantDal.Add(entity);
+           _departmantDal.Add(entity);
+            
 		}
 
 		public void TDelete(Departmant entity)

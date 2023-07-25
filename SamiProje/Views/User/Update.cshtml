@@ -16,7 +16,6 @@
                     <th>Name</th>
                     <th>Address</th>
                     <th>PhoneNumber</th>                   
-                    <th>Aktif mi</th>
                     <th>Düzenle</th>
 
                 </tr>
@@ -30,12 +29,8 @@
                     <td> <input asp-for="Mail" type="text" class="form-control"></td>
                     <td> <input asp-for="PhoneNumber" type="tel" class="form-control"></td>
                     
-                    <td>
-                        <label><input asp-for="IsActive" type="radio" value="true"> Aktif</label>
-                        <label><input asp-for="IsActive" type="radio" value="false"> Pasif</label>
-                        <input asp-for="CreatedDate" type="hidden" class="form-control">
-                    </td>
-
+                   
+                    <input asp-for="CreatedDate" type="hidden" class="form-control">
                     <td> <button type="submit" class="btn btn-warning">Düzenle</button></td>
                 </tr>
                 <tr>

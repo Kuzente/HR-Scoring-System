@@ -25,10 +25,7 @@
                     <label class="form-label">Departman Seçiniz</label>
                     <select class="form-select" asp-for="Departmant.ID" asp-items="@ViewBag.DepartmantsSelectlist">
 
-                    </select>
-                    <label class="form-label">Kullanıcı Seçiniz</label>
-                    <select class="form-select" asp-for="UserID" asp-items="@ViewBag.UsersSelectlist">
-                    </select>
+                    </select>                  
 
                 </div>
                 <div class="modal-footer">
@@ -63,7 +60,7 @@
 <!--Departman Listesi-->
 <div class="container mt-4">
     <table id="datatable"
-           class="table table-striped table-bordered">
+           class="table table-striped table-hover table-bordered border-primary">
         <thead>
             <tr>
                 <th>ID</th>
@@ -83,18 +80,22 @@
                 <tr>
 
                     <td>@item.ID</td>
-                    <td>@item.Name (@item.User.Username)</td>
+                    <td>@item.Name</td>
                     <td><span class="badge bg-dark">@item.Departmant.Name</span></td>
                     <td>@item.Weight</td>
                     <td>@item.CreatedDate</td>
                     <td>@item.UpdatedDate</td>
                     @if (item.IsActive)
                     {
-                        <td><span class="badge bg-success">Aktif</span></td>
+                        <td>
+                            <a asp-action="ChangeStatus" asp-route-id="@item.ID" class="btn btn-outline-secondary">Pasif Yap</a>
+                        </td>
                     }
                     else
                     {
-                        <td><span class="badge bg-secondary">Pasif</span></td>
+                        <td>
+                            <a asp-action="ChangeStatus" asp-route-id="@item.ID" class="btn btn-success">Aktif Yap</a>
+                        </td>
                     }
 
                     <td><a href="/Title/Update/@item.ID" class="btn btn-warning">Düzenle</a></td>

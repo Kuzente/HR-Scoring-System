@@ -12,6 +12,7 @@ namespace SamiProje.DataAccess.Abstract
 		void Add(T t);
 		void Delete(T t);
 		void Update(T t);
+		void ChangeStatus(int id);
 		List<T> GetList();
 		T GetById(int id);
 		List<T> GetListByFilter(Expression<Func<T, bool>> filter);
