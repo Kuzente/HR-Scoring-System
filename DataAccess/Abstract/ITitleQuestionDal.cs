@@ -10,5 +10,6 @@ namespace DataAccess.Abstract
 {
     public interface ITitleQuestionDal : IGenericDal<TitleQuestion>
     {
+        List<TitleQuestion> GetQuestionsByTitle();
     }
 }

@@ -6,8 +6,10 @@
     <title>@ViewData["Title"] - SamiProje</title>    
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
-    <link rel="stylesheet" href="~/SamiProje.styles.css" asp-append-version="true" />
-    <link rel="stylesheet" href="https://cdn.datatables.net/1.11.3/css/dataTables.bootstrap5.min.css" />
+    <link rel="stylesheet" href="~/SamiProje.styles.css" asp-append-version="true" /> 
+   
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.13.5/css/jquery.dataTables.min.css" />
+    
     <!-- Font Awesome -->
     
           @await RenderSectionAsync("Links", required:false)  
@@ -38,7 +40,7 @@
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-controller="Title" asp-action="Index">Ünvanlar</a>
                         </li><li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Question" asp-action="Index">Soru Ekle</a>
+                            <a class="nav-link text-dark" asp-route-id="" asp-controller="Question" asp-action="Index">Soru Ekle</a>
                         </li>
                     </ul>
                 </div>
@@ -51,15 +53,33 @@
         </main>
     </div>
 
-    <footer class="border-top footer text-muted">
-        <div class="container">
-            &copy; 2023 - SamiProje - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
-        </div>
-    </footer>
+    
    
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>
+    <script src="https://cdn.datatables.net/1.11.3/js/dataTables.bootstrap5.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
+    <script src="https://cdn.datatables.net/1.11.3/js/jquery.dataTables.min.js"></script>
+    @*<script>
+        $(document).ready(function () {
+            $('#datatable').DataTable();
+        });
+    </script>*@
+    <script>
+        $('#datatable').dataTable({
+            "info": true,
+            "scrollY": "400px",
+            "scrollCollapse": true,
+            "pagingType": "full_numbers",
+            "search": {
+                "return": true
+            },
+            language: {
+                url: '//cdn.datatables.net/plug-ins/1.13.5/i18n/tr.json',
+            },
+        });
+    </script>
 
     @await RenderSectionAsync("Scripts", required: false)
 </body>

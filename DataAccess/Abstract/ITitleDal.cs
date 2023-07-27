@@ -13,5 +13,6 @@ namespace DataAccess.Abstract
         List<Title> GetTitlesWithDepartmant();
         Title GetTitleWithDepartmant(int id);
         void UpdateTitle(Title title);
+        List<Title> GetTitleWithQuestions();
     }
 }

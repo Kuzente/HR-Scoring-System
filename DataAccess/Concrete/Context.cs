@@ -44,5 +44,7 @@ namespace SamiProje.DataAccess.Concrete
         public DbSet<Branch> Branches { get; set; }
         public DbSet<User> Users { get; set; }
         public DbSet<Title> Titles { get; set; }
+        public DbSet<TitleQuestion> TitleQuestions { get; set; }
+
     }
 }

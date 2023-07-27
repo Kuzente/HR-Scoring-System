@@ -12,6 +12,7 @@ namespace SamiProje.Mapping
             CreateMap<Branch, BranchDto>().ReverseMap();
             CreateMap<User, UserDto>().ReverseMap();
             CreateMap<Title, TitleDto>().ReverseMap();
+            CreateMap<TitleQuestion, TitleQuestionDto>().ReverseMap();
             
 
         }

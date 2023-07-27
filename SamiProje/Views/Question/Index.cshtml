@@ -1,0 +1,172 @@
+﻿@model TitleQuestionDto
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@{
+    Model.ReturnUrl = ViewContext.HttpContext.Request.PathAndQuery();
+}
+
+
+<h3>Sorular</h3>
+@if (Model.Title == null)
+{
+    <button type="button" disabled class="btn btn-primary">
+        Soru Ekle
+    </button>
+}
+else
+{
+    
+    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
+        Soru Ekle
+    </button>
+}
+
+<!-- AddModal -->
+<form asp-action="Add" method="post">
+    <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="staticBackdropLabel">Soru Ekle</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <label class="form-label">Soru İçeriği</label>
+                    <input asp-for="Content" type="text" class="form-control">
+                    <label class="form-label">Soru Ağırlığı</label>
+                    <input asp-for="Weight" type="number" class="form-control">
+                    <label class="form-label">Soru Eklenecek Ünvan</label>
+                    <input asp-for="Title.Name" type="text" disabled class="form-control">
+                    <input type="hidden" asp-for="Title.ID"/>
+                    <input type="hidden" asp-for="ReturnUrl"/>
+                    
+                   
+
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Kapat</button>
+                    <button type="submit" class="btn btn-primary">Ekle</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>
+<!-- DeleteModal -->
+<form asp-action="Delete" method="post">
+    <div class="modal fade" id="staticBackdrop2" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="staticBackdropLabel">Soru Sil</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    Soruyu silmek istediğinize emin misiniz?
+                    <div class="alert alert-danger" role="alert">
+                        İlgili departman altındaki görev tanımı veya tanımları da silinecektir!!!
+                        <br />
+                        Emin Misiniz?
+                    </div>
+                    <input type="hidden" id="itemIdInput" name="id" value="">
+                    <input type="hidden" name="returnUrl" value="@Model.ReturnUrl">
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">İptal Et</button>
+                    <button type="submit" class="btn btn-danger">Sil</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>
+<!--Form Get Question-->
+<form method="get" asp-action="GetQuestions">
+<div class="row mt-3">
+     
+    <div class="col-9">
+            <select class="form-select" asp-for="Title.ID" >
+            @foreach (var item in Model.TitlesHaveQuestions)
+                {
+                    <option value="@item.ID">@item.Name</option>
+                }
+
+        </select>
+    </div>
+    <div class="col-3">
+        <button class="btn btn-primary" type="submit">Ünvan Seç</button>
+    </div>
+    
+    
+</div>
+</form>
+<!--Form Get Question-->
+
+<!--Soruların Listesi-->
+@if (Model.Title != null)
+{
+    <div class="container mt-4">
+        <table id="datatable"
+               class="cell-border table-hover">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Soru</th>
+                    <th>Soru Ağırlığı</th>
+                    <th>Eklenme Tarihi</th>
+                    <th>Güncellenme Tarihi</th>
+                    <th>Aktif Mi?</th>
+                    <th>Düzenle</th>
+                    <th>Sil</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model.TitleQuestions)
+                {
+                    <tr>
+
+                        <td>@item.ID</td>
+                        <td>@item.Content</td>
+                        <td>@item.Weight</td>
+                        <td>@item.CreatedDate.ToString("dd/MM/yyyy HH:mm")</td>
+                        <td>@item.UpdatedDate.ToString("dd/MM/yyyy HH:mm")</td>
+                        @if (item.IsActive)
+                        {
+                            <td>
+                                <a href="/Question/ChangeStatus/@item.ID?returnUrl=@Model.ReturnUrl" class="btn btn-outline-secondary">Pasif Yap</a>
+                            </td>
+                        }
+                        else
+                        {
+                            <td>
+                                <a href="/Question/ChangeStatus/@item.ID?returnUrl=@Model.ReturnUrl" class="btn btn-success">Aktif Yap</a>
+                            </td>
+                        }
+
+                        <td><a href="/Question/Update/@item.ID?returnUrl=@Model.ReturnUrl" class="btn btn-warning">Düzenle</a></td>
+                        <td><button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#staticBackdrop2" data-item-id="@item.ID">Sil</button></td>
+
+                    </tr>
+                }
+
+
+
+            </tbody>
+        </table>
+    </div>
+}
+
+<!--Soruların Listesi-->
+@section Scripts{
+    
+    <script>
+        $('#staticBackdrop2').on('show.bs.modal', function (event) {
+            var button = $(event.relatedTarget); // Tıklanan butonu yakalayın
+            var itemId = button.data('item-id'); // data-item-id özelliğini alın
+
+            var modal = $(this);
+            modal.find('#itemIdInput').val(itemId); // itemIdInput adlı gizli input alanına değeri yerleştirin
+        });
+    </script>
+}
+

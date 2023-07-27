@@ -55,6 +55,7 @@ namespace DataAccess.Concrete
         {
             using (Context context = new Context())
             {
+                
                 return context.Users.Where(p => p.ID == id)
                     //.Include(d => d.Departmants)
                     .Include(b => b.Branches)

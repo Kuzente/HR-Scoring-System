@@ -34,6 +34,11 @@ namespace DataAccess.Concrete
             }
         }
 
+        public List<Title> GetTitleWithQuestions()
+        {
+            throw new NotImplementedException();
+        }
+
         public void UpdateTitle(Title title)
         {
             using (Context context = new Context())
