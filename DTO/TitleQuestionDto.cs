@@ -15,7 +15,7 @@ namespace DTO
         public Title Title { get; set; }
         public int TitleID { get; set; }
         public List<TitleQuestion> TitleQuestions { get; set; } = new List<TitleQuestion>();
-        public List<Title> TitlesHaveQuestions { get; set; } = new List<Title>();
+        public List<Title> Titles { get; set; } = new List<Title>();
         public string ReturnUrl { get; set; } = "/";
 
     }

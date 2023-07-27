@@ -46,7 +46,7 @@ namespace Business.Concrete
 
         public List<TitleQuestion> TGetList()
         {
-            return _titleQuestionDal.GetQuestionsByTitle();
+            return _titleQuestionDal.GetList();
         }
 
         public void TUpdate(TitleQuestion entity)

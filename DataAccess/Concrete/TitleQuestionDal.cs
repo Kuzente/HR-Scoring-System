@@ -13,14 +13,6 @@ namespace DataAccess.Concrete
 {
     public class TitleQuestionDal : GenericRepository<TitleQuestion>, ITitleQuestionDal
     {
-        public List<TitleQuestion> GetQuestionsByTitle()
-        {
-            using (Context context = new Context())
-            {
-                return context.TitleQuestions
-                    .Include(p=> p.Title)
-                    .ToList();
-            }
-        }
+        
     }
 }

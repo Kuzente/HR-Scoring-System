@@ -86,7 +86,7 @@ else
      
     <div class="col-9">
             <select class="form-select" asp-for="Title.ID" >
-            @foreach (var item in Model.TitlesHaveQuestions)
+            @foreach (var item in Model.Titles)
                 {
                     <option value="@item.ID">@item.Name</option>
                 }

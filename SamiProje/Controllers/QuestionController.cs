@@ -23,7 +23,7 @@ namespace SamiProje.Controllers
         {
             TitleQuestionDto dto = new TitleQuestionDto();
 
-            dto.TitlesHaveQuestions = _titleService.TGetList();       
+            dto.Titles = _titleService.TGetList();       
             if (id > 0)
             {
                 dto.TitleQuestions = _questionService.GetListByFilter(p => p.TitleID == id);
