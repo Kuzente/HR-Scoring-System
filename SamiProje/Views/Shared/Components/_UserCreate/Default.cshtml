@@ -18,12 +18,12 @@
                     <label class="form-label">Kullanıcı Mail</label>
                     <input asp-for="Mail" type="text" class="form-control">
                     <label class="form-label">Kullanıcı Telefonu</label>
-                    <input asp-for="PhoneNumber" type="tel" class="form-control">
-                   @* <label class="form-label">Kullanıcıya Bağlı Departmanlar</label>
-                    <select asp-for="DepartmantIds" asp-items="@ViewBag.DepartmantsSelectlist" class="form-select mt-3" multiple data-mdb-container="staticBackdrop" data-mdb-filter="true" data-placeholder="Choose anything">
-                    </select>*@
+                    <input asp-for="PhoneNumber" type="tel" class="form-control">                   
                     <label class="form-label">Kullanıcıya Bağlı Şubeler</label>
-                    <select asp-for="BranchIds" asp-items="@ViewBag.BranchesSelectlist" class="form-select mt-3" multiple data-mdb-container="staticBackdrop" data-mdb-filter="true" data-placeholder="Choose anything">
+                    @*<select asp-for="BranchIds" asp-items="@ViewBag.BranchesSelectlist" class="form-select mt-3" multiple data-mdb-container="staticBackdrop" data-mdb-filter="true" data-placeholder="Choose anything">
+                    </select>*@
+                    <select class="form-select mt-3" multiple asp-for="BranchIds" asp-items="@(new SelectList(Model.Branches,"ID","Name"))">
+
                     </select>
                     
 
@@ -36,6 +36,3 @@
         </div>
     </div>
 </form>
-@section Scripts{
-    
-}

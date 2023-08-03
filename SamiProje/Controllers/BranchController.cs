@@ -9,47 +9,42 @@ namespace SamiProje.Controllers
 {
     public class BranchController : Controller
     {
-        private readonly IBranchService _branchService;
-        private readonly IMapper _mapper;
-
-        public BranchController(IBranchService branchService, IMapper mapper)
+        private readonly IBranchService _branchDtoService;
+        public BranchController(IBranchService branchDtoService)
         {
-            _branchService = branchService;
-            _mapper = mapper;
+            _branchDtoService = branchDtoService;
         }
-
         public IActionResult Index()
-        {
-            BranchDto dto = new();
-            dto.Branches = _branchService.TGetList();
-            return View(dto);
+        { 
+            return View(new BranchDto { Branches = _branchDtoService.TGetList() });
         }
         [HttpPost]
         public IActionResult Add(BranchDto dto)
-        {          
-            _branchService.TAdd(_mapper.Map<Branch>(dto));
+        {
+            _branchDtoService.TAdd(dto);
             return RedirectToAction("Index");
         }
         [HttpGet]
         public IActionResult Update(int id)
         {
-            return View(_mapper.Map<BranchDto>(_branchService.TGetById(id)));
+            var dto = _branchDtoService.TGetById(id);
+            return View(dto);
         }
         [HttpPost]
         public IActionResult Update(BranchDto dto)
         {
-            _branchService.TUpdate(_mapper.Map<Branch>(dto));
+            _branchDtoService.TUpdate(dto);
             return RedirectToAction("Index");
         }
         [HttpPost]
         public IActionResult Delete(int id)
         {
-            _branchService.TDelete(_branchService.TGetById(id));
+            _branchDtoService.TDelete(id);
             return RedirectToAction("Index");
         }
         public IActionResult ChangeStatus(int id)
         {
-            _branchService.ChangeStatus(id);
+            _branchDtoService.ChangeStatus(id);
             return RedirectToAction("Index");
         }
     }

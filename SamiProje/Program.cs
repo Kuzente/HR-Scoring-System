@@ -1,4 +1,5 @@
 using SamiProje.Extensions;
+using Business.Extensions;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -7,7 +8,7 @@ builder.Services.AddControllersWithViews();
 
 builder.Services.ConfigureDataAccessLifetimes();
 builder.Services.ConfigureBusinessLifetimes();
-
+builder.Services.AutoMapperExtension();
 builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 
 

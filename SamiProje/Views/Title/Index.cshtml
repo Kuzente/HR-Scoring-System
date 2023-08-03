@@ -23,9 +23,8 @@
                     <label class="form-label">Ünvan Ağırlığı</label>
                     <input asp-for="Weight" type="number" class="form-control">
                     <label class="form-label">Departman Seçiniz</label>
-                    <select class="form-select" asp-for="Departmant.ID" asp-items="@ViewBag.DepartmantsSelectlist">
-
-                    </select>                  
+                    <select class="form-select" asp-for="Departmant.ID" asp-items="@(new SelectList(Model.Departmants,"ID","Name"))" >
+                    </select>
 
                 </div>
                 <div class="modal-footer">
@@ -46,8 +45,12 @@
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    Ünvanı silmek istediğinize emin misiniz?
-                    <input type="hidden" id="itemIdInput" name="id" value="">
+                    <div class="alert alert-danger" role="alert">
+                        İlgili Ünvan altındaki sorular da silinecektir!!!
+                        <br />
+                        Emin Misiniz?
+                    </div>
+                    <input type="hidden" id="itemIdInput" asp-for="ID" value="">
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">İptal Et</button>
@@ -97,21 +100,15 @@
                             <a asp-action="ChangeStatus" asp-route-id="@item.ID" class="btn btn-success">Aktif Yap</a>
                         </td>
                     }
-
                     <td><a href="/Title/Update/@item.ID" class="btn btn-warning">Düzenle</a></td>
                     <td><button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#staticBackdrop2" data-item-id="@item.ID">Sil</button></td>
-
                 </tr>
             }
-
-
-
         </tbody>
     </table>
 </div>
 <!--Departman Listesi-->
 @section Scripts{
-  
     <script>
         $('#staticBackdrop2').on('show.bs.modal', function (event) {
             var button = $(event.relatedTarget); // Tıklanan butonu yakalayın

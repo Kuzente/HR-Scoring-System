@@ -12,10 +12,10 @@ namespace DTO
     {
         public string Content { get; set; } = "";
         public int Weight { get; set; }
-        public Title Title { get; set; }
+        public TitleDto Title { get; set; }
         public int TitleID { get; set; }
-        public List<TitleQuestion> TitleQuestions { get; set; } = new List<TitleQuestion>();
-        public List<Title> Titles { get; set; } = new List<Title>();
+        public List<TitleQuestionDto> TitleQuestions { get; set; } = new List<TitleQuestionDto>();
+        public List<TitleDto> Titles { get; set; } = new List<TitleDto>();
         public string ReturnUrl { get; set; } = "/";
 
     }

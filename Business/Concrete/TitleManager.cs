@@ -1,6 +1,9 @@
-﻿using Business.Abstract;
+﻿using AutoMapper;
+using Business.Abstract;
 using DataAccess.Abstract;
+using DTO;
 using Entity;
+using SamiProje.DataAccess.Abstract;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,45 +16,53 @@ namespace Business.Concrete
     public class TitleManager : ITitleService
     {
         private readonly ITitleDal _titleDal;
-
-        public TitleManager(ITitleDal titleDal)
+        private readonly IDepartmantDal _departmantDal;
+        private readonly IMapper _mapper;
+        public TitleManager(ITitleDal titleDal, IMapper mapper, IDepartmantDal departmantDal)
         {
             _titleDal = titleDal;
+            _mapper = mapper;
+            _departmantDal = departmantDal;
         }
-
         public void ChangeStatus(int id)
         {
             _titleDal.ChangeStatus(id);
         }
-
-        public List<Title> GetListByFilter(Expression<Func<Title, bool>> filter)
+        public void TAdd(TitleDto entity)
         {
-            return _titleDal.GetListByFilter(filter);
+            var model = _mapper.Map<Title>(entity);
+            _titleDal.Add(model);
         }
-
-        public void TAdd(Title entity)
+        public TitleDto TGetById(int id)
         {
-            _titleDal.Add(entity);
+            var model = _mapper.Map<TitleDto>(_titleDal.GetById(id));
+            return model;
         }
-
-        public void TDelete(Title entity)
+        public List<TitleDto> TGetList()
         {
-            _titleDal.Delete(entity);
+            var model = _mapper.Map<List<TitleDto>>(_titleDal.GetList());
+            return model;
         }
-
-        public Title TGetById(int id)
+        public void TUpdate(TitleDto entity)
         {
-            return _titleDal.GetTitleWithDepartmant(id);
+            var model = _mapper.Map<Title>(entity);
+            model.Departmant = _departmantDal.GetById(model.Departmant.ID);
+            _titleDal.UpdateTitle(model);
         }
-
-        public List<Title> TGetList()
+        public List<TitleDto> GetTitlesWithDepartmant()
         {
-            return _titleDal.GetTitlesWithDepartmant();
+            var model = _mapper.Map<List<TitleDto>>(_titleDal.GetTitlesWithDepartmant());
+            return model;
         }
-
-        public void TUpdate(Title entity)
+        public TitleDto GetTitleWithDepartmant(int id)
         {
-            _titleDal.UpdateTitle(entity); // burada departmandan gelen değeri EntityState yakalayamadığı için .update metodu kullanılan fonksiyona yönd
+            var model = _mapper.Map<TitleDto>(_titleDal.GetTitleWithDepartmant(id));
+            return model;
+        }
+        public void TDelete(int id)
+        {
+            var model = _titleDal.GetById(id);
+            _titleDal.Delete(model);
         }
     }
 }

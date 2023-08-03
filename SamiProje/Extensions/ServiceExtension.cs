@@ -2,8 +2,6 @@
 using Business.Concrete;
 using DataAccess.Abstract;
 using DataAccess.Concrete;
-using SamiProje.Business.Abstract;
-using SamiProje.Business.Concrete;
 using SamiProje.DataAccess.Abstract;
 using SamiProje.DataAccess.Concrete;
 
@@ -21,7 +19,7 @@ namespace SamiProje.Extensions
         }
         public static void ConfigureBusinessLifetimes(this IServiceCollection services) 
         {
-            services.AddScoped<IDepartmantService, DepartmantManager>();
+            services.AddScoped<IDepartmantService,DepartmantManager>();
             services.AddScoped<IBranchService, BranchManager>();
             services.AddScoped<IUserService, UserManager>();
             services.AddScoped<ITitleService, TitleManager>();

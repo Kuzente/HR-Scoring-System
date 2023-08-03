@@ -30,7 +30,8 @@ namespace DataAccess.Concrete
             using (Context context = new Context())
             {
                 
-                var entity = context.Entry(model);               
+                var entity = context.Entry(model);
+                model.TitleID = 1;
                 //context.UpdateRange(model.Departmants);
                 context.UpdateRange(model.Branches);
                 entity.State = EntityState.Modified;

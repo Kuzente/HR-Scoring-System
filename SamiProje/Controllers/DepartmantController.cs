@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using Business.Abstract;
 using DTO;
 using Entity;
 using Humanizer;
@@ -10,49 +11,44 @@ namespace SamiProje.Controllers
 {
 	public class DepartmantController : Controller
 	{
-		private readonly IDepartmantService _departmantService;
-		private readonly IMapper _mapper;
+		private readonly IDepartmantService _departmantDtoService;
+		
 
-        public DepartmantController(IDepartmantService departmantService, IMapper mapper)
+        public DepartmantController(IDepartmantService departmantDtoService)
         {
-            _departmantService = departmantService;
-            _mapper = mapper;
+            _departmantDtoService = departmantDtoService;
+            
         }
         public IActionResult Index()
-		{
-            DepartmantDto dto = new();
-            dto.Departmants = _departmantService.TGetList();            			
-			return View(dto);
+		{ 		
+			return View(new DepartmantDto { Departmants = _departmantDtoService.TGetList()});
 		}
 		public IActionResult Add(DepartmantDto dto)
 		{
-            var model = _mapper.Map<Departmant>(dto);						
-			_departmantService.TAdd(model);			
+            _departmantDtoService.TAdd(dto);			
 			return RedirectToAction("Index");
 		}
 		[HttpGet]
         public IActionResult Update(int id)
         {          
-            var dto = _mapper.Map<DepartmantDto>(_departmantService.TGetById(id));
+            var dto = _departmantDtoService.TGetById(id);
             return View(dto);
         }
         [HttpPost]
         public IActionResult Update(DepartmantDto dto)
         {
-            var model = _mapper.Map<Departmant>(dto);
-            _departmantService.TUpdate(model);
+            _departmantDtoService.TUpdate(dto);
             return RedirectToAction("Index");
         }
         [HttpPost]
         public IActionResult Delete(int id)
         {
-            var model = _departmantService.TGetById(id);
-			_departmantService.TDelete(model);
+            _departmantDtoService.TDelete(id);
             return RedirectToAction("Index");
         }
         public IActionResult ChangeStatus(int id)
         {
-            _departmantService.ChangeStatus(id);          
+            _departmantDtoService.ChangeStatus(id);       
             return RedirectToAction("Index");
         }
     }

@@ -3,10 +3,7 @@
     ViewData["Title"] = "Index";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
-
 <h3>Şubeler</h3>
-
-
 @await Component.InvokeAsync("_BranchCreate")
 <!-- DeleteModal -->
 <form asp-action="Delete" method="post">
@@ -19,7 +16,7 @@
                 </div>
                 <div class="modal-body">
                     Şubeyi silmek istediğinize emin misiniz?
-                    <input type="hidden" id="itemIdInput" name="id" value="">
+                    <input type="hidden" id="itemIdInput" asp-for="ID" value="">
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">İptal Et</button>
@@ -29,7 +26,7 @@
         </div>
     </div>
 </form>
-<!--Departman Listesi-->
+<!--Şubeler Listesi-->
 <div class="container mt-4">
     <table id="datatable"
            class="table table-striped table-hover table-bordered border-primary">
@@ -50,7 +47,6 @@
             @foreach (var item in Model.Branches)
             {
                 <tr>
-
                     <td>@item.ID</td>
                     <td>@item.Name</td>
                     <td>@item.Address</td>
@@ -69,21 +65,15 @@
                             <a asp-action="ChangeStatus" asp-route-id="@item.ID" class="btn btn-success">Aktif Yap</a>
                         </td>
                     }
-
                     <td><a href="/Branch/Update/@item.ID" class="btn btn-warning">Düzenle</a></td>
                     <td><button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#staticBackdrop2" data-item-id="@item.ID">Sil</button></td>
-
                 </tr>
             }
-
-
-
         </tbody>
     </table>
 </div>
-<!--Departman Listesi-->
-@section Scripts{
- 
+<!--Şubeler Listesi-->
+@section Scripts{ 
     <script>
         $('#staticBackdrop2').on('show.bs.modal', function (event) {
             var button = $(event.relatedTarget); // Tıklanan butonu yakalayın

@@ -14,6 +14,6 @@ namespace Entity
         public string PhoneNumber { get; set; }        
         public List<Branch> Branches { get; set; }
         public Title Title { get; set; }
-        public int TitleID { get; set; }
+        public int TitleID { get; set; } 
     }
 }

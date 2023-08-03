@@ -17,33 +17,20 @@
                     <th>Departman Adı</th>
                     <th>Ünvan Ağırlığı</th>
                     <th>Düzenle</th>
-
                 </tr>
             </thead>
             <tbody>
-
                 <tr>
                     <td>@Model.ID</td>
                     <td><input asp-for="Name" type="text" class="form-control"></td>                   
                     <td>
-                        <select class="form-select" asp-for="Departmant.ID" asp-items="@ViewBag.DepartmantsSelectlist" >
-
+                        <select class="form-select" asp-for="Departmant.ID" asp-items="@(new SelectList(Model.Departmants,"ID","Name"))">
                         </select>
-
                     </td>
                     <td> <input asp-for="Weight" type="number" class="form-control"></td>
-                    
                     <input asp-for="CreatedDate" type="hidden" class="form-control">
-
-
                     <td> <button type="submit" class="btn btn-warning">Düzenle</button></td>
-
-
                 </tr>
-
-
-
-
             </tbody>
         </table>
     </form>

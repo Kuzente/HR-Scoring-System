@@ -44,7 +44,9 @@
 
                     </td>*@
                     <td>
-                        <select asp-for="BranchIds" class="form-select mt-3" multiple data-mdb-container="staticBackdrop" data-mdb-filter="true" data-placeholder="Choose anything" asp-items="@ViewBag.BranchsSelectlist">
+                       @* <select asp-for="BranchIds" class="form-select mt-3" multiple data-mdb-container="staticBackdrop" data-mdb-filter="true" data-placeholder="Choose anything" asp-items="@ViewBag.BranchsSelectlist">
+                        </select>*@
+                        <select class="form-select mt-3" multiple asp-for="BranchIds" asp-items="@(new SelectList(Model.AllBranches,"ID","Name",Model.Branches))">
                         </select>
 
                     </td>

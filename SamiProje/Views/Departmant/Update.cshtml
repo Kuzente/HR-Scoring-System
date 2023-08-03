@@ -15,30 +15,17 @@
                 <th>ID</th>
                 <th>Name</th>
                 <th>Weight</th>
-
-
                 <th>Düzenle</th>
-
             </tr>
         </thead>
-        <tbody>
-            
+        <tbody>           
                 <tr>
                 <td>@Model.ID</td>               
                 <td><input asp-for="Name" type="text" class="form-control"></td>
-                <td> <input asp-for="Weight" type="number" class="form-control"></td>
-                 
+                <td> <input asp-for="Weight" type="number" class="form-control"></td>                
                     <input asp-for="CreatedDate" type="hidden" class="form-control">
-
-
-                <td> <button type="submit" class="btn btn-warning">Düzenle</button></td>
-                   
-
+                <td> <button type="submit" class="btn btn-warning">Düzenle</button></td>                 
                 </tr>
-           
-            
-
-
         </tbody>
     </table>
     </form>

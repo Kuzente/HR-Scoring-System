@@ -10,7 +10,7 @@ namespace DTO
 {
     public class DepartmantDto : Dto,IDto
     {
-        public List<Departmant> Departmants { get; set; }      
+        public List<DepartmantDto> Departmants { get; set; } 
         public string Name { get; set; }
         public int Weight { get; set; }
        

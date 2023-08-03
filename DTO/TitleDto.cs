@@ -12,8 +12,9 @@ namespace DTO
     {
         public string Name { get; set; }
         public int Weight { get; set; }
-        public Departmant Departmant { get; set; }
-        public List<Title> Titles { get; set; }
-        
+        public DepartmantDto Departmant { get; set; }
+        public List<TitleDto> Titles { get; set; }
+        public List<DepartmantDto> Departmants { get; set; }
+
     }
 }

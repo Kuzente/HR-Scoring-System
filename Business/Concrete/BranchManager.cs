@@ -2,11 +2,7 @@
 using Business.Abstract;
 using DataAccess.Abstract;
 using DTO;
-using DTO.Abstract;
 using Entity;
-using SamiProje.Business.Abstract;
-using SamiProje.DataAccess.Abstract;
-using SamiProje.DataAccess.Concrete;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -19,47 +15,42 @@ namespace Business.Concrete
     public class BranchManager : IBranchService
     {
         private readonly IBranchDal _branchDal;
+        private readonly IMapper _mapper;
 
-        public BranchManager(IBranchDal branchDal)
+        public BranchManager(IBranchDal branchDal, IMapper mapper)
         {
             _branchDal = branchDal;
-           
+            _mapper = mapper;
         }
-
         public void ChangeStatus(int id)
         {
-           _branchDal.ChangeStatus(id);
+            _branchDal.ChangeStatus(id);
+        }
+        public void TAdd(BranchDto entity)
+        {
+            var model = _mapper.Map<Branch>(entity);
+            _branchDal.Add(model);
         }
 
-        public List<Branch> GetListByFilter(Expression<Func<Branch, bool>> filter)
+        public void TDelete(int id)
         {
-            return _branchDal.GetListByFilter(filter);
+            var model = _branchDal.GetById(id);
+            _branchDal.Delete(model);
         }
-
-        public void TAdd(Branch entity)
+        public BranchDto TGetById(int id)
         {
-            _branchDal.Add(entity);
+            var model = _mapper.Map<BranchDto>(_branchDal.GetById(id));
+            return model;
         }
-
-        public void TDelete(Branch entity)
+        public List<BranchDto> TGetList()
         {
-            
-            _branchDal.Delete(entity);
+            var model = _mapper.Map<List<BranchDto>>(_branchDal.GetList());
+            return model;
         }
-
-        public Branch TGetById(int id)
+        public void TUpdate(BranchDto entity)
         {
-            return _branchDal.GetById(id);
-        }
-
-        public List<Branch> TGetList()
-        {
-            return _branchDal.GetList();
-        }
-
-        public void TUpdate(Branch entity)
-        {
-            _branchDal.Update(entity);
+            var model = _mapper.Map<Branch>(entity);
+            _branchDal.Update(model);
         }
     }
 }

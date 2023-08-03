@@ -11,67 +11,52 @@ namespace SamiProje.Controllers
 {
     public class TitleController : Controller
     {
-        private readonly ITitleService _titleService;
-        private readonly IDepartmantService _departmantService;
-        private readonly IMapper _mapper;
+        private readonly ITitleService _titleDtoService;
+        private readonly IDepartmantService _departmantDtoService;
 
-        public TitleController(ITitleService titleService, IDepartmantService departmantService, IMapper mapper)
+
+        public TitleController(ITitleService titleDtoService, IDepartmantService departmantDtoService)
         {
-            _titleService = titleService;
-            _departmantService = departmantService;
-            _mapper = mapper;
+            _titleDtoService = titleDtoService;
+            _departmantDtoService = departmantDtoService;
         }
-
         public IActionResult Index()
-        {
-            TitleDto dto = new();
-            dto.Titles = _titleService.TGetList();
-            ViewBag.DepartmantsSelectlist = _departmantService.TGetList().OrderBy(p => p.Name).Select(d => new SelectListItem // Tüm Departmanların Listelenmesi
-            {
-                Text = d.Name,
-                Value = d.ID.ToString(),
-                
-            });
-
-                
-            return View(dto);
+        {        
+            var departmants = _departmantDtoService.TGetList()
+                                                    .OrderBy(p=> p.Name)
+                                                    .ToList();
+            return View(new TitleDto { Titles = _titleDtoService.GetTitlesWithDepartmant() , Departmants = departmants});
         }
         [HttpPost]
         public IActionResult Add(TitleDto dto)
         {
-            var model = _mapper.Map<Title>(dto);
-            _titleService.TAdd(model);
+            _titleDtoService.TAdd(dto);
             return RedirectToAction("Index");
         }
         [HttpGet]
         public IActionResult Update(int id)
-        {
-            var dto = _mapper.Map<TitleDto>(_titleService.TGetById(id));
-            ViewBag.DepartmantsSelectlist = _departmantService.TGetList().OrderBy(p => p.Name).Select(d => new SelectListItem // Tüm Departmanların Listelenmesi
-            {
-                Text = d.Name,
-                Value = d.ID.ToString(),
-                
-            });
-
-            return View(dto);
+        {         
+            var model = _titleDtoService.GetTitleWithDepartmant(id);
+            var departmants = _departmantDtoService.TGetList()
+                                                    .OrderBy(p => p.Name)
+                                                    .ToList();
+            model.Departmants = departmants;
+            return View(model);
         }
         [HttpPost]
         public IActionResult Update(TitleDto dto)
         {
-            var model = _mapper.Map<Title>(dto);
-            model.Departmant = _departmantService.TGetById(model.Departmant.ID);
-            _titleService.TUpdate(model);
+            _titleDtoService.TUpdate(dto);
             return RedirectToAction("Index");
         }
         public IActionResult Delete(int id)
-        {        
-            _titleService.TDelete(_titleService.TGetById(id));
+        {
+            _titleDtoService.TDelete(id);
             return RedirectToAction("Index");
         }
         public IActionResult ChangeStatus(int id)
         {
-            _titleService.ChangeStatus(id);
+            _titleDtoService.ChangeStatus(id);
             return RedirectToAction("Index");
         }
 

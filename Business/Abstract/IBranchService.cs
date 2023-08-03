@@ -1,4 +1,4 @@
-﻿using Entity;
+﻿using DTO;
 using SamiProje.Business.Abstract;
 using System;
 using System.Collections.Generic;
@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace Business.Abstract
 {
-    public interface IBranchService : IGenericService<Branch>
+    public interface IBranchService : IGenericService<BranchDto>
     {
     }
 }

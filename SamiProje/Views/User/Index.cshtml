@@ -8,8 +8,6 @@
 }
 <h1>Kullanıcılar</h1>
 @await Component.InvokeAsync("_UserCreate")
-
-
 <!-- DeleteModal -->
 <form asp-action="Delete" method="post">
     <div class="modal fade" id="staticBackdrop2" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
@@ -21,7 +19,7 @@
                 </div>
                 <div class="modal-body">
                     Kullanıcıyı silmek istediğinize emin misiniz?
-                    <input type="hidden" id="itemIdInput" name="id" value="">
+                    <input type="hidden" id="itemIdInput" asp-for="ID" value="">
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">İptal Et</button>
@@ -41,7 +39,7 @@
                 <th>Adı</th>
                 <th>Adres</th>
                 <th>Telefon No</th>
-                <th>Departmanlar</th>
+               
                 <th>Şubeler</th>
                 <th>Oluşturulma Zamanı</th>
                 <th>Güncellenme Zamanı</th>
@@ -55,34 +53,11 @@
             @foreach (var item in Model.Users)
             {
                 <tr>
-
                     <td>@item.ID</td>
                     <td>@item.Username</td>
                     <td>@item.Mail</td>
                     <td>@item.PhoneNumber</td>
-                    <td>
-                       
-                        @if (item.Title?.Departmant != null)
-                        {
-                            <span class="badge bg-info">@item.Title.Departmant.Name</span>
-
-                        }
-                        else
-                        {
-
-                            <span class="badge bg-info">Departman Yok</span>
-                        }
-                        @if (item.Title == null)
-                        {
-                            <span class=" badge bg-danger">Ünvan Yok</span>
-                        }
-                        else
-                        {
-                            <span class=" badge bg-danger">@item.Title.Name</span>
-                        }
-                        
-                        
-                    </td>
+                    
                     <td>
                         @foreach (var dongu in item.Branches)
                         {
@@ -91,7 +66,6 @@
                     </td>
                     <td>@item.CreatedDate</td>
                     <td>@item.UpdatedDate</td>
-
                     @if (item.IsActive)
                     {
                         <td>
@@ -104,30 +78,16 @@
                             <a asp-action="ChangeStatus" asp-route-id="@item.ID" class="btn btn-success">Aktif Yap</a>
                         </td>
                     }
-
                     <td><a href="/User/Update/@item.ID" class="btn btn-warning">Düzenle</a></td>
-                    <td><button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#staticBackdrop2" data-item-id="@item.ID">Sil</button></td>
-
+                    <td><button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#staticBackdrop2" data-item-id="@item.ID">Sil</button>
+                    </td>
                 </tr>
             }    
-
         </tbody>
     </table>
-    
 </div>
 <!--Departman Listesi-->
 @section Scripts{
-    
-    <script src="https://cdn.datatables.net/1.11.3/js/dataTables.bootstrap5.min.js"></script>
-    <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
-    <script src="https://cdn.datatables.net/1.11.3/js/jquery.dataTables.min.js"></script>
-    
-
-    <script>
-        $(document).ready(function () {
-            $('#datatable').DataTable();
-        });
-    </script>
     <script>
         $('#staticBackdrop2').on('show.bs.modal', function (event) {
             var button = $(event.relatedTarget); // Tıklanan butonu yakalayın
@@ -137,6 +97,5 @@
             modal.find('#itemIdInput').val(itemId); // itemIdInput adlı gizli input alanına değeri yerleştirin
         });
     </script>
-    
 }
 

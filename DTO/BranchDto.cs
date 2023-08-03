@@ -10,7 +10,7 @@ namespace DTO
 {
     public class BranchDto : Dto , IDto
     {
-        public List<Branch> Branches { get; set; }
+        public List<BranchDto> Branches { get; set; }
         public string Name { get; set; }
         public string Address { get; set; }
         public string PhoneNumber { get; set; }

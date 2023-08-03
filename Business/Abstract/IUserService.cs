@@ -1,4 +1,5 @@
-﻿using Entity;
+﻿using DTO;
+using Entity;
 using SamiProje.Business.Abstract;
 using System;
 using System.Collections.Generic;
@@ -8,9 +9,9 @@ using System.Threading.Tasks;
 
 namespace Business.Abstract
 {
-    public interface IUserService : IGenericService<User>
+    public interface IUserService : IGenericService<UserDto>
     {
-        List<User> GetUsersWithDepartmantsAndTitle();
-        User GetUserWithDepartmantsAndTitle(int id);
+        List<UserDto> GetUsersWithDepartmantsAndTitle();
+        UserDto GetUserWithDepartmantsAndTitle(int id);
     }
 }
